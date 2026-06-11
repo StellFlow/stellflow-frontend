@@ -12,8 +12,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Brand } from "./components/Brand";
+import { LandingNav } from "./components/LandingNav";
 import { LandingDashboardPreview } from "./components/LandingDashboardPreview";
-import { WalletModal } from "./components/WalletModal";
 
 const metrics = [
   ["$240M+", "Payments Processed"],
@@ -71,46 +71,18 @@ const useCases = [
 export default function Home() {
   return (
     <div className="overflow-x-hidden bg-background text-text-primary">
-      <nav className="sticky top-0 z-50 flex h-topbar-height items-center border-b border-divider bg-card-bg/95 shadow-sm backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-md sm:px-xl">
-          <div className="flex items-center gap-xl">
-            <Brand />
-            <div className="hidden items-center gap-lg md:flex">
-              {["Features", "How It Works", "Use Cases"].map(
-                (item) => (
-                  <a
-                    key={item}
-                    className="font-medium text-text-secondary transition hover:text-primary"
-                    href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
-                  >
-                    {item}
-                  </a>
-                ),
-              )}
-            </div>
-          </div>
-          <div className="flex items-center gap-md">
-            <Link
-              href="/onboarding"
-              className="hidden rounded-lg px-md py-sm font-semibold text-text-primary transition hover:bg-surface-container-low sm:inline-flex"
-            >
-              Sign In
-            </Link>
-            <WalletModal />
-          </div>
-        </div>
-      </nav>
+      <LandingNav />
 
-      <header className="relative overflow-hidden py-3xl">
-        <div className="mx-auto grid max-w-7xl items-center gap-2xl px-md sm:px-xl lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.9fr)]">
-          <div className="fade-up">
+      <header className="relative overflow-hidden py-2xl sm:py-3xl">
+        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-2xl px-md sm:px-xl lg:grid-cols-[minmax(0,1.02fr)_minmax(420px,0.98fr)]">
+          <div className="min-w-0 fade-up">
             <span className="mb-md inline-block rounded-full bg-primary-tint px-md py-xs text-sm font-semibold text-primary">
               Built on Stellar Network
             </span>
-            <h1 className="font-display mb-lg max-w-3xl text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
+            <h1 className="font-display mb-lg max-w-[680px] text-4xl font-bold leading-[1.08] text-text-primary sm:text-5xl lg:text-[56px]">
               Borderless Payroll & Escrow Infrastructure for Modern Teams.
             </h1>
-            <p className="mb-xl max-w-lg text-lg leading-8 text-text-secondary">
+            <p className="mb-xl max-w-[560px] text-lg leading-8 text-text-secondary">
               Manage global payroll, streamline USDC settlements, and protect
               contractors with smart milestone-based escrows.
             </p>
@@ -134,7 +106,7 @@ export default function Home() {
       </header>
 
       <section className="bg-bg-secondary py-2xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-lg px-md sm:grid-cols-2 sm:px-xl lg:grid-cols-4">
+        <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-lg px-md sm:grid-cols-2 sm:px-xl lg:grid-cols-4">
           {metrics.map(([value, label]) => (
             <div
               key={label}
@@ -150,7 +122,7 @@ export default function Home() {
       </section>
 
       <section id="features" className="py-3xl">
-        <div className="mx-auto max-w-7xl px-md sm:px-xl">
+        <div className="mx-auto w-full max-w-[1200px] px-md sm:px-xl">
           <div className="mx-auto mb-3xl max-w-2xl text-center">
             <h2 className="font-display mb-md text-3xl font-semibold">
               Managing Global Payments Is Still Broken
@@ -184,7 +156,7 @@ export default function Home() {
       </section>
 
       <section className="bg-surface-container-low py-3xl">
-        <div className="mx-auto max-w-7xl px-md sm:px-xl">
+        <div className="mx-auto w-full max-w-[1200px] px-md sm:px-xl">
           <div className="mb-3xl flex flex-col justify-between gap-lg md:flex-row md:items-end">
             <div className="max-w-xl">
               <h2 className="font-display mb-md text-3xl font-semibold">
@@ -222,7 +194,7 @@ export default function Home() {
       </section>
 
       <section id="how-it-works" className="py-3xl">
-        <div className="mx-auto max-w-7xl px-md sm:px-xl">
+        <div className="mx-auto w-full max-w-[1200px] px-md sm:px-xl">
           <h2 className="font-display mb-3xl text-center text-3xl font-semibold">
             How StellFlow Works
           </h2>
@@ -252,7 +224,7 @@ export default function Home() {
       </section>
 
       <section id="use-cases" className="bg-bg-secondary py-3xl">
-        <div className="mx-auto max-w-7xl px-md sm:px-xl">
+        <div className="mx-auto w-full max-w-[1200px] px-md sm:px-xl">
           <h2 className="font-display mb-2xl text-center text-3xl font-semibold">
             Solutions for Every Professional
           </h2>
@@ -295,7 +267,7 @@ export default function Home() {
       </section>
 
       <section className="px-md py-3xl sm:px-xl">
-        <div className="mx-auto max-w-7xl rounded-xl bg-primary p-2xl text-center text-on-primary sm:p-3xl">
+        <div className="mx-auto w-full max-w-[1200px] rounded-xl bg-primary p-2xl text-center text-on-primary sm:p-3xl">
           <h2 className="font-display mx-auto mb-lg max-w-3xl text-3xl font-bold sm:text-5xl">
             Start Sending and Receiving Payments Globally.
           </h2>
@@ -321,7 +293,7 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-divider bg-white px-md py-xl sm:px-xl">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-md text-sm text-text-muted md:flex-row md:items-center">
+        <div className="mx-auto flex w-full max-w-[1200px] flex-col justify-between gap-md text-sm text-text-muted md:flex-row md:items-center">
           <Brand compact />
           <span>© 2026 StellFlow Infrastructure. All rights reserved.</span>
           <span className="flex items-center gap-xs">

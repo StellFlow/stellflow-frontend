@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Brand } from "./Brand";
-import { WalletModal } from "./WalletModal";
+import { DashboardAccount, DashboardGuard } from "./DashboardAccount";
 
 type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
 
@@ -38,7 +38,8 @@ export function DashboardShell({
   children,
 }: DashboardShellProps) {
   return (
-    <div className="min-h-screen bg-surface-bright text-text-primary">
+    <DashboardGuard>
+      <div className="min-h-screen bg-surface-bright text-text-primary">
       <aside className="fixed left-0 top-0 z-40 hidden h-full w-sidebar-width flex-col overflow-y-auto border-r border-divider bg-card-bg p-md lg:flex">
         <div className="mb-xl px-xs">
           <Brand caption="Enterprise Finance" compact />
@@ -87,21 +88,13 @@ export function DashboardShell({
             </h1>
             <p className="mt-xs text-text-secondary">{description}</p>
           </div>
-          <div className="flex items-center gap-md">
-            <Link
-              href="/dashboard/notifications"
-              className="rounded-full p-md text-text-secondary transition hover:bg-surface-container-low hover:text-primary"
-              aria-label="Open notifications"
-            >
-              <Bell size={20} />
-            </Link>
-            <WalletModal />
-          </div>
+          <DashboardAccount />
         </header>
 
         {children}
       </main>
-    </div>
+      </div>
+    </DashboardGuard>
   );
 }
 

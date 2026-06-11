@@ -10,10 +10,13 @@ import {
   Wallet,
   X,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { connectWallet, getWalletSession } from "../lib/walletSession";
 
 type WalletModalProps = {
   defaultOpen?: boolean;
+  className?: string;
 };
 
 const walletOptions = [
@@ -37,7 +40,8 @@ const walletOptions = [
   },
 ];
 
-export function WalletModal({ defaultOpen = false }: WalletModalProps) {
+export function WalletModal({ defaultOpen = false, className = "" }: WalletModalProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(defaultOpen);
 
   useEffect(() => {
@@ -51,12 +55,18 @@ export function WalletModal({ defaultOpen = false }: WalletModalProps) {
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [open]);
 
+  const handleWalletSelect = () => {
+    connectWallet();
+    const session = getWalletSession();
+    router.push(session.onboarded ? "/dashboard" : "/onboarding");
+  };
+
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex h-11 items-center justify-center gap-sm rounded-lg bg-primary px-lg font-semibold text-on-primary shadow-sm transition hover:bg-primary-hover active:scale-95"
+        className={`inline-flex h-11 items-center justify-center gap-sm rounded-lg bg-primary px-lg font-semibold text-on-primary shadow-sm transition hover:bg-primary-hover active:scale-95 ${className}`}
       >
         <Wallet size={18} />
         Connect Wallet
@@ -115,9 +125,10 @@ export function WalletModal({ defaultOpen = false }: WalletModalProps) {
                 const Icon = option.icon;
 
                 return (
-                  <a
+                  <button
                     key={option.name}
-                    href="/onboarding"
+                    type="button"
+                    onClick={handleWalletSelect}
                     className="group flex w-full items-center justify-between rounded-xl border border-divider bg-white p-md transition hover:border-primary hover:bg-primary-tint/40 active:scale-[0.98]"
                   >
                     <span className="flex min-w-0 items-center gap-md">
@@ -138,7 +149,7 @@ export function WalletModal({ defaultOpen = false }: WalletModalProps) {
                       className="shrink-0 text-text-muted transition group-hover:translate-x-1 group-hover:text-primary"
                       size={20}
                     />
-                  </a>
+                  </button>
                 );
               })}
             </div>

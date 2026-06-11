@@ -9,6 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { completeOnboarding } from "../lib/walletSession";
 
 const loaderSteps = [
   {
@@ -43,6 +44,7 @@ export function WorkspaceLoader() {
   useEffect(() => {
     if (activeStep >= loaderSteps.length) {
       const redirect = window.setTimeout(() => {
+        completeOnboarding();
         window.location.href = "/onboarding/success";
       }, 1300);
       return () => window.clearTimeout(redirect);
