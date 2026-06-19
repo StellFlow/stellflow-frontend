@@ -7,33 +7,14 @@ import { useEffect, useState } from "react";
 import {
   getWalletSession,
   logoutWallet,
+  onWalletSessionChange,
   shortenAddress,
   type WalletSession,
 } from "../lib/walletSession";
+import { AuthGuard } from "./AuthGuard";
 
 export function DashboardGuard({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const session = getWalletSession();
-
-    if (!session.connected) {
-      router.replace("/connect-wallet");
-      return;
-    }
-
-    if (!session.onboarded) {
-      router.replace("/onboarding");
-      return;
-    }
-
-    setReady(true);
-  }, [router]);
-
-  if (!ready) return null;
-
-  return <>{children}</>;
+  return <AuthGuard mode="onboarded">{children}</AuthGuard>;
 }
 
 export function DashboardAccount() {
@@ -45,7 +26,9 @@ export function DashboardAccount() {
   });
 
   useEffect(() => {
-    setSession(getWalletSession());
+    const syncSession = () => setSession(getWalletSession());
+    syncSession();
+    return onWalletSessionChange(syncSession);
   }, []);
 
   return (
