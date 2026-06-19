@@ -8,6 +8,7 @@ import {
   Rocket,
   ShieldCheck,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { completeOnboarding } from "../lib/walletSession";
 
@@ -39,13 +40,14 @@ const loaderSteps = [
 ];
 
 export function WorkspaceLoader() {
+  const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     if (activeStep >= loaderSteps.length) {
       const redirect = window.setTimeout(() => {
         completeOnboarding();
-        window.location.href = "/onboarding/success";
+        router.push("/onboarding/success");
       }, 1300);
       return () => window.clearTimeout(redirect);
     }
@@ -55,7 +57,7 @@ export function WorkspaceLoader() {
     }, 1800);
 
     return () => window.clearTimeout(timer);
-  }, [activeStep]);
+  }, [activeStep, router]);
 
   const progress = Math.min(100, Math.round(((activeStep + 1) / loaderSteps.length) * 100));
 

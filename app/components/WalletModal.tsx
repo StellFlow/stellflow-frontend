@@ -55,10 +55,26 @@ export function WalletModal({ defaultOpen = false, className = "" }: WalletModal
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [open]);
 
-  const handleWalletSelect = () => {
-    connectWallet();
-    const session = getWalletSession();
-    router.push(session.onboarded ? "/dashboard" : "/onboarding");
+  const handleWalletSelect = async (walletName: string) => {
+    if (walletName === "Freighter") {
+      try {
+        const { requestAccess } = await import("@stellar/freighter-api");
+        const response = await requestAccess();
+        if ("address" in response) {
+          connectWallet(response.address);
+          const session = getWalletSession();
+          router.push(session.onboarded ? "/dashboard" : "/onboarding");
+        }
+      } catch {
+        connectWallet("");
+        const session = getWalletSession();
+        router.push(session.onboarded ? "/dashboard" : "/onboarding");
+      }
+    } else {
+      connectWallet("");
+      const session = getWalletSession();
+      router.push(session.onboarded ? "/dashboard" : "/onboarding");
+    }
   };
 
   return (
@@ -128,7 +144,7 @@ export function WalletModal({ defaultOpen = false, className = "" }: WalletModal
                   <button
                     key={option.name}
                     type="button"
-                    onClick={handleWalletSelect}
+                    onClick={() => handleWalletSelect(option.name)}
                     className="group flex w-full items-center justify-between rounded-xl border border-divider bg-white p-md transition hover:border-primary hover:bg-primary-tint/40 active:scale-[0.98]"
                   >
                     <span className="flex min-w-0 items-center gap-md">
@@ -161,7 +177,7 @@ export function WalletModal({ defaultOpen = false, className = "" }: WalletModal
             </span>
             <p className="text-xs text-text-secondary">
               New to Stellar?{" "}
-              <a href="#" className="font-semibold text-primary hover:underline">
+              <a href="https://stellar.org/developers" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
                 Learn how to set up a wallet.
               </a>
             </p>

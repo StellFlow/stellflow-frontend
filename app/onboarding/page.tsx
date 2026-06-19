@@ -11,11 +11,11 @@ export default function OnboardingPage() {
           <OnboardingForm />
           <p className="text-center text-sm text-text-muted">
             Having trouble?{" "}
-            <a className="font-semibold text-primary hover:underline" href="#">
+            <a className="font-semibold text-primary hover:underline" href="mailto:support@stellflow.io">
               Contact Support
             </a>{" "}
             or visit our{" "}
-            <a className="font-semibold text-primary hover:underline" href="#">
+            <a className="font-semibold text-primary hover:underline" href="https://docs.stellflow.io" target="_blank" rel="noopener noreferrer">
               Help Center
             </a>
             .
